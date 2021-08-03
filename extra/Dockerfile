@@ -9,6 +9,10 @@ RUN apt-get update && \
         pandas \
         scikit-learn \
         pytest \
+        torch==1.7.1 \
+        torchvision==0.8.2 \
+        git+https://github.com/Onion-Team-VN/onion-lib.git \
+        git+https://github.com/statsmodels/statsmodels.git \
         scipy && \
     rm -rf /var/lib/apt/lists/*
 
