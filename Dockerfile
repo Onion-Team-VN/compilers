@@ -37,14 +37,15 @@ RUN apt-get update && \
     apt-get install -y python3 python3-pip && \
     pip3 install \
         mlxtend \
-        numpy \
-        pandas \
+        numpy==1.19.5 \
+        pandas==1.1.5 \
         scikit-learn \
         pytest \
-        scipy \
+        scipy==1.5.4 \
         torch==1.7.1 \
         statsmodels==0.12.2 \
         matplotlib==3.1.0 \
+        seaborn==0.11.1 \
         && \
     rm -rf /var/lib/apt/lists/*
 
