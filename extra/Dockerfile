@@ -12,7 +12,9 @@ RUN apt-get update && \
         scipy \
         torch==1.7.1 \
         statsmodels==0.12.2 \
+        git+https://github.com/Onion-Team-VN/onion-lib.git \
         matplotlib==3.1.0 \
+        seaborn \
         && \
     rm -rf /var/lib/apt/lists/*
 
