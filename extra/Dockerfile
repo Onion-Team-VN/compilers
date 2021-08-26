@@ -11,8 +11,8 @@ RUN apt-get update && \
         pytest \
         scipy \
         torch==1.7.1 \
-        statsmodels==0.12.2 \
         git+https://github.com/Onion-Team-VN/onion-lib.git \
+        statsmodels==0.12.2 \
         matplotlib==3.1.0 \
         seaborn \
         && \
