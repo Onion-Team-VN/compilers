@@ -50,6 +50,7 @@ jobs:
           ls
           cd workspace/judge0/judge0
           git checkout master
+          git pull
           docker build -t judge0_with_libs_v3 .
           docker-compose down
           docker-compose pull
