@@ -1,0 +1,56 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Trigger build
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: true
+
+    steps:
+    - name: build compilers
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          ls
+          cd workspace/compilers/extra
+          git checkout master
+          git pull 
+          docker build -t onionai/judge0_compilers_extra .
+          docker push onionai/judge0_compilers_extra
+  
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: true
+    needs: build
+    
+    steps:
+    - name: build judge0 and deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEV_HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          ls
+          cd workspace/judge0/judge0
+          git checkout master
+          docker build -t judge0_with_libs_v3 .
+          docker-compose down
+          docker-compose pull
+          docker-compose up -d
